@@ -43,38 +43,48 @@ class Login extends Model{
 
     /* this function connected user in the plateform. */
 
-    $request = $this->_connexion->prepare("SELECT COUNT(user_email), user_id FROM Users WHERE user_email=?");
-    $request->execute(array($this->_login));
-    $numberOfRows = $request->fetch();
+    $id = $this->isUser();
 
-    if($numberOfRows['COUNT(user_email)'] == 1){
-
-      $id = $numberOfRows['user_id'];
-
-      if( ! $this->isAllreadyConnected($id) ){
-
-        $token = uniqid($id);
-        $request = $this->_connexion->prepare("INSERT INTO Connexion (connexion_start, ip_address, token, connected_user) VALUES (?, ?, ?, ?)");
-        $request->execute(array(time(), $_SERVER['REMOTE_ADDR'], $token, $id));
-
+    if( $id == false ){
+      return $response = json_encode([
+        'status'  =>  'failled',
+        'message' =>  'the email is not correct'
+      ]);
+    }
+    else{
+      if( ! $this->isPasswordCorrect()){
         return $response = json_encode([
-          'status'  =>  'ok',
-          'message' =>  'conected',
-          'token'   =>  $token
+          'status'  =>  'failled',
+          'message' =>  'password incorrect'
         ]);
-
       }
       else{
-        $request = $this->_connexion->prepare("SELECT token FROM Connexion WHERE connected_user=? AND token != 'expired'");
-        $request->execute(array($id));
-        $result = $request->fetch();
 
-        $token = $result['token'];
-        return $response = json_encode([
-          'status'  =>  'active',
-          'message' =>  'allready connected',
-          'token'   =>  $token
-        ]);
+        if( ! $this->isAllreadyConnected($id) ){
+
+          $token = uniqid($id);
+          $request = $this->_connexion->prepare("INSERT INTO Connexion (connexion_start, ip_address, token, connected_user) VALUES (?, ?, ?, ?)");
+          $request->execute(array(time(), $_SERVER['REMOTE_ADDR'], $token, $id));
+
+          return $response = json_encode([
+            'status'  =>  'ok',
+            'message' =>  'conected',
+            'token'   =>  $token
+          ]);
+
+        }
+        else{
+          $request = $this->_connexion->prepare("SELECT token FROM Connexion WHERE connected_user=? AND token != 'expired'");
+          $request->execute(array($id));
+          $result = $request->fetch();
+
+          $token = $result['token'];
+          return $response = json_encode([
+            'status'  =>  'active',
+            'message' =>  'allready connected',
+            'token'   =>  $token
+          ]);
+        }
 
       }
 
@@ -99,14 +109,29 @@ class Login extends Model{
 
   }
 
-  private function isUser($login){
+  private function isUser(){
     /* this function check the if the email exist in database */
-
+    $request = $this->_connexion->prepare("SELECT user_id, COUNT(user_email) AS him FROM Users WHERE user_email=?");
+    $request->execute( array($this->_login));
+    $result = $request->fetch();
+    if($result['him'] == 1)
+      return $id = $result['user_id'];
+    else
+      return false;
   }
 
-  private function isPasswordCorrect($password){
+  private function isPasswordCorrect(){
     /* this function check if the password is correct */
-    
+    $request = $this->_connexion->prepare("SELECT user_password FROM Users WHERE user_email=?");
+    $request->execute( array($this->_login) );
+    $result = $request->fetch();
+
+    $password = $result['user_password'];
+
+    if(password_verify($this->_password, $password))
+      return true;
+    else
+      return false;
   }
 
 
