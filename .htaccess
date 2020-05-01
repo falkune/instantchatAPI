@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule (.*) public/index.php/$1
+
+php_flag display_errors on
