@@ -83,6 +83,7 @@ class Login extends Model{
           return $response = json_encode([
             'status'  =>  'active',
             'message' =>  'allready connected',
+            'id'      =>  $id,
             'token'   =>  $token
           ]);
         }
