@@ -11,7 +11,7 @@ class Users extends Model{
 	public function __construct($params){
 
 		if($this->checkParams($params)){
-
+			
 		}
 		else{
 			return $response = json_encode([
