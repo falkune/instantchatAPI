@@ -45,7 +45,7 @@ class Users extends Model{
 	private function isConnected(){
     // this function check if the user is connected or not
     $request = $this->_connexion->prepare("SELECT COUNT(*) AS him FROM Connexion WHERE connected_user=? AND token=?");
-    $request->execute(array($this->_transmitter, $this->_token));
+    $request->execute(array($this->_userId, $this->_token));
 
     $result = $request->fetch();
 
