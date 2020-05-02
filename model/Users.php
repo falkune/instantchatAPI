@@ -10,6 +10,15 @@ class Users extends Model{
 
 	public function __construct($params){
 
+		if($this->checkParams($params)){
+
+		}
+		else{
+			return $response = json_encode([
+				'status'	=>	'failled',
+				'message'	=>	'params does not match !'
+			]);
+		}
 	}
 
 	private function setUserId($userId){
