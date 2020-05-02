@@ -24,7 +24,7 @@ class Users extends Model{
 		$request = $this->_connexion->prepare("SELECT user_id, user_name FROM Users WHERE user_id IN (SELECT connected_user FROM Connexion WHERE connexion_end IS NULL AND token=? AND connected_user=?) ORDER BY user_login");
 		$request->execute(array($this->_token, $this->_token));
 
-		$result = $request->fetchAll();
+		$result = $request->fetchAll(PDO::FETCH_ASSOC);
 
 		return $response = json_encode([
 			'status'	=>	'ok',
