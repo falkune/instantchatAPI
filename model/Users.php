@@ -15,4 +15,12 @@ class Users extends Model{
 		$this->_userId = $userId;
 	}
 
+	private function setToken($token){
+		$this->_token = $token;
+	}
+
+	private function getUsers(){
+		
+	}
+
 }
