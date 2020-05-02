@@ -26,7 +26,7 @@ class Users extends Model{
 
 
       // connexion initialisation
-			$_connexion = $this->connexion();
+			$this->_connexion = $this->connexion();
 
 			// display the liste of the users.
 			echo $this->getUsers();
