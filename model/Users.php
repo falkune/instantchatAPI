@@ -4,15 +4,15 @@
 */
 class Users extends Model{
 
-	private $user_id;
-	private $tokel;
+	private $_userId;
+	private $_token;
 
 	public function __construct($params){
 
 	}
 
-	private function setUserId(){
-		
+	private function setUserId($userId){
+		$this->_userId = $userId;
 	}
 
 }
