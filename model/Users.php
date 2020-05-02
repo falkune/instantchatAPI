@@ -34,7 +34,10 @@ class Users extends Model{
 	}
 
 	private function checkParams($params){
-		
+		if(count($params) == 2)
+			return true;
+		else
+			return false;
 	}
 
 }
