@@ -16,6 +16,8 @@ class Users extends Model{
 			$this->setToken($params[1]);
 
 			$_connexion = $this->connexion();
+
+			echo $this->getUsers();
 		}
 		else{
 			return $response = json_encode([
