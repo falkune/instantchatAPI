@@ -11,7 +11,11 @@ class Users extends Model{
 	public function __construct($params){
 
 		if($this->checkParams($params)){
-			
+
+			$this->setUserId($params[0]);
+			$this->setToken($params[1]);
+
+			$_connexion = $this->connexion();
 		}
 		else{
 			return $response = json_encode([
