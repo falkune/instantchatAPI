@@ -21,16 +21,25 @@ class Users extends Model{
 	}
 
 	private function getUsers(){
-		$request = $this->_connexion->prepare("SELECT user_id, user_name FROM Users WHERE user_id IN (SELECT connected_user FROM Connexion WHERE connexion_end IS NULL AND token=?) ORDER BY user_login");
-		$request->execute(array($this->_token));
+		if($this->isConnected()){
+			$request = $this->_connexion->prepare("SELECT user_id, user_name FROM Users WHERE user_id IN (SELECT connected_user FROM Connexion WHERE connexion_end IS NULL AND token=?) ORDER BY user_login");
+			$request->execute(array($this->_token));
 
-		$result = $request->fetchAll(PDO::FETCH_ASSOC);
+			$result = $request->fetchAll(PDO::FETCH_ASSOC);
 
-		return $response = json_encode([
-			'status'	=>	'ok',
-			'message'	=>	'API : succes',
-			'date'		=>	$result
-		]);
+			return $response = json_encode([
+				'status'	=>	'ok',
+				'message'	=>	'API : succes',
+				'date'		=>	$result
+			]);
+		}
+		else{
+			return $response = json_encode([
+				'status'	=>	'failled',
+				'message' =>	'you are not connected'
+			]);
+		}
+		
 	}
 
 	private function isConnected(){
