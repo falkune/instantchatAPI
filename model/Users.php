@@ -25,7 +25,11 @@ class Users extends Model{
 		$request->execute(array($this->_token, $this->_token));
 
 		$result = $request->fetchAll();
-		
+
+		return $response = json_encode([
+			'status'	=>	'ok',
+			
+		]);
 	}
 
 }
