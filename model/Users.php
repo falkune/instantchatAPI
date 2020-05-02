@@ -33,4 +33,8 @@ class Users extends Model{
 		]);
 	}
 
+	private function checkParams($params){
+		
+	}
+
 }
