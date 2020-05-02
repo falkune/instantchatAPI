@@ -10,13 +10,21 @@ class Users extends Model{
 
 	public function __construct($params){
 
+		 /* this is the constructor of the class,
+    it is automatically called when the class
+    is instantiate, from this time he does his job */
+
 		if($this->checkParams($params)){
 
+			// initialisation of the class attributes
 			$this->setUserId($params[0]);
 			$this->setToken($params[1]);
 
+
+      // connexion initialisation
 			$_connexion = $this->connexion();
 
+			// display the liste of the users.
 			echo $this->getUsers();
 		}
 		else{
