@@ -57,7 +57,7 @@ class Users extends Model{
 			return $response = json_encode([
 				'status'	=>	'ok',
 				'message'	=>	'API : succes',
-				'date'		=>	$result
+				'data'		=>	$result
 			]);
 		}
 		else{
