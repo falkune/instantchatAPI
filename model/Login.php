@@ -112,7 +112,9 @@ class Login extends Model{
   }
 
   private function isUser(){
+
     /* this function check the if the email exist in database */
+
     $request = $this->_connexion->prepare("SELECT user_id, COUNT(user_email) AS him FROM Users WHERE user_email=?");
     $request->execute( array($this->_login));
     $result = $request->fetch();
@@ -123,7 +125,9 @@ class Login extends Model{
   }
 
   private function isPasswordCorrect(){
+
     /* this function check if the password is correct */
+    
     $request = $this->_connexion->prepare("SELECT user_password FROM Users WHERE user_email=?");
     $request->execute( array($this->_login) );
     $result = $request->fetch();
