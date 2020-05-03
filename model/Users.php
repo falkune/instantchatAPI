@@ -49,7 +49,7 @@ class Users extends Model{
 
 	private function getUsers(){
 		if($this->isConnected()){
-			$request = $this->_connexion->prepare("SELECT user_id, user_name FROM Users WHERE user_id=?");
+			$request = $this->_connexion->prepare("SELECT user_id, user_name FROM Users WHERE user_id!=?");
 			$request->execute(array($this->_userId));
 
 			$result = $request->fetchAll(PDO::FETCH_ASSOC);
