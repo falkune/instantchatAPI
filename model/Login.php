@@ -121,7 +121,7 @@ class Login extends Model{
     if($result['him'] == 1){
       $id = $result['user_id'];
       $name = $result['user_name'];
-      return $id = $result['user_id'];
+      return $data = array('id' => $id, 'name' => $name);
     }
     else
       return false;
