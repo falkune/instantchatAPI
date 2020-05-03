@@ -43,9 +43,9 @@ class Login extends Model{
 
     /* this function connected user in the plateform. */
 
-    $id = $this->isUser();
+    $data = $this->isUser();
 
-    if( $id == false ){
+    if( $data == false ){
       return $response = json_encode([
         'status'  =>  'failled',
         'message' =>  'the email is not correct'
@@ -59,7 +59,8 @@ class Login extends Model{
         ]);
       }
       else{
-
+        $id = $data['id'];
+        $name = $data['name'];
         if( ! $this->isAllreadyConnected($id) ){
 
           $token = uniqid($id);
