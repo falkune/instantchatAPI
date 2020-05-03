@@ -127,7 +127,7 @@ class Login extends Model{
   private function isPasswordCorrect(){
 
     /* this function check if the password is correct */
-    
+
     $request = $this->_connexion->prepare("SELECT user_password FROM Users WHERE user_email=?");
     $request->execute( array($this->_login) );
     $result = $request->fetch();
