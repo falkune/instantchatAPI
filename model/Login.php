@@ -118,8 +118,10 @@ class Login extends Model{
     $request = $this->_connexion->prepare("SELECT user_id, user_name, COUNT(user_email) AS him FROM Users WHERE user_email=?");
     $request->execute( array($this->_login));
     $result = $request->fetch();
-    if($result['him'] == 1)
-      return $id = $result['user_id'];
+    if($result['him'] == 1){
+      $data = array('id' => $result['user_id'], 'name' => $result['user_name'])
+      return $data;
+    }
     else
       return false;
   }
