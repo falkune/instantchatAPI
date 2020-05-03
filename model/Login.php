@@ -71,6 +71,7 @@ class Login extends Model{
             'status'  =>  'ok',
             'message' =>  'conected',
             'id'      =>  $id,
+            'name'    =>  $name,
             'token'   =>  $token
           ]);
 
@@ -85,6 +86,7 @@ class Login extends Model{
             'status'  =>  'active',
             'message' =>  'allready connected',
             'id'      =>  $id,
+            'name'    =>  $name,
             'token'   =>  $token
           ]);
         }
