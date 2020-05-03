@@ -43,9 +43,9 @@ class Login extends Model{
 
     /* this function connected user in the plateform. */
 
-    $id = $this->isUser();
+    $data = $this->isUser();
 
-    if( $id == false ){
+    if( $data == false ){
       return $response = json_encode([
         'status'  =>  'failled',
         'message' =>  'the email is not correct'
@@ -60,30 +60,32 @@ class Login extends Model{
       }
       else{
 
-        if( ! $this->isAllreadyConnected($id) ){
+        if( ! $this->isAllreadyConnected($data[0]) ){
 
-          $token = uniqid($id);
+          $token = uniqid($data[0]);
           $request = $this->_connexion->prepare("INSERT INTO Connexion (connexion_start, ip_address, token, connected_user) VALUES (?, ?, ?, ?)");
-          $request->execute(array(time(), $_SERVER['REMOTE_ADDR'], $token, $id));
+          $request->execute(array(time(), $_SERVER['REMOTE_ADDR'], $token, $data[0]));
 
           return $response = json_encode([
             'status'  =>  'ok',
             'message' =>  'conected',
-            'id'      =>  $id,
+            'id'      =>  $data[0],
+            'name'    =>  $data[1],
             'token'   =>  $token
           ]);
 
         }
         else{
           $request = $this->_connexion->prepare("SELECT token FROM Connexion WHERE connected_user=? AND token != 'expired'");
-          $request->execute(array($id));
+          $request->execute(array($data[0]));
           $result = $request->fetch();
 
           $token = $result['token'];
           return $response = json_encode([
             'status'  =>  'active',
             'message' =>  'allready connected',
-            'id'      =>  $id,
+            'id'      =>  $data[0],
+            'name'    =>  $data[1],
             'token'   =>  $token
           ]);
         }
