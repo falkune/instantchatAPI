@@ -113,11 +113,11 @@ class Login extends Model{
 
   private function isUser(){
     /* this function check the if the email exist in database */
-    $request = $this->_connexion->prepare("SELECT user_id, user_name, COUNT(user_email) AS him FROM Users WHERE user_email=?");
+    $request = $this->_connexion->prepare("SELECT user_id, COUNT(user_email) AS him FROM Users WHERE user_email=?");
     $request->execute( array($this->_login));
     $result = $request->fetch();
     if($result['him'] == 1)
-      return $data = {$result['user_id'], $result['user_name']};
+      return $id = $result['user_id'];
     else
       return false;
   }
