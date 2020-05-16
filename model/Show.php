@@ -77,7 +77,7 @@ class Show extends Model{
   private function showDiscution(){
     // this function list all message bettwen the two interlocutors
     if( $this->isConnected() ){
-      $request = $this->_connexion->prepare("SELECT message_body AS message, from_user_id AS transmitter, to_user_id AS reciever  FROM Posted_messages WHERE (from_user_id=? AND to_user_id=?) OR (from_user_id=? AND to_user_id=?)");
+      $request = $this->_connexion->prepare("SELECT * FROM Posted_messages WHERE (from_user_id=? AND to_user_id=?) OR (from_user_id=? AND to_user_id=?)");
       $request->execute(array($this->_transmitter, $this->_receiver, $this->_receiver, $this->_transmitter));
 
       $result = $request->fetchAll(PDO::FETCH_ASSOC);
