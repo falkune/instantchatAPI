@@ -16,28 +16,28 @@ class Connected extends Model{
 
   public function __construct($params){
 
-    /* this is the constructor of the class,
-   it is automatically called when the class
-   is instantiate, from this time he does his job */
+  /* this is the constructor of the class,
+  it is automatically called when the class
+  is instantiate, from this time he does his job */
 
    if($this->checkParams($params)){
 
-     // initialisation of the class attributes
-     $this->setUserId($params[0]);
-     $this->setToken($params[1]);
+    // initialisation of the class attributes
+    $this->setUserId($params[0]);
+    $this->setToken($params[1]);
 
 
-     // connexion initialisation
-     $this->_connexion = $this->connexion();
+    // connexion initialisation
+    $this->_connexion = $this->connexion();
 
-     // display the liste of the users.
-     echo $this->getUsers();
+    // display the liste of the users.
+    echo $this->getUsers();
    }
    else{
-     return $response = json_encode([
-       'status'	=>	'failled',
-       'message'	=>	'params does not match !'
-     ]);
+    return $response = json_encode([
+      'status'	=>	'failled',
+      'message'	=>	'params does not match !'
+    ]);
    }
  }
 

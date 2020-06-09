@@ -5,7 +5,7 @@ class Conf{
       'host'     => "localhost",
       'database' => "instantchat",
       'login'    => "diokel",
-      'password' => "  diokel"
+      'password' => "passer"
     )
   );
 }
